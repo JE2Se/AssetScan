@@ -34,7 +34,7 @@ def vulnall(portdic):
             print(Vcolors.OKGREEN+str(ip[0])+'\t请检查是否存在Hadoop未授权访问漏洞~'+Vcolors.ENDC)
             e = ip[0]+":50070:Hadoop端口开放，请检查是否存在Hadoop未授权访问漏洞"
             pvulnall.append(e) 
-        if ip[-1] == "7001" or "7002":
+        if ip[-1] == "7001" or ip[-1] == "7002":
             print(Vcolors.OKGREEN+str(ip[0])+'\t请检查是否存在weblogic反序列化漏洞~'+Vcolors.ENDC)
             e = ip[0]+":7001:weblogic端口开放，请检查是否存在weblogic反序列化漏洞"
             pvulnall.append(e)
