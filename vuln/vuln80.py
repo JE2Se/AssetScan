@@ -55,12 +55,16 @@ def phpstudy(host_list):
                 "Connection": "close",
                 "Accept-charset": "c3lzdGVtKCdlY2hvIEpFMlNlSnVzdFRydXN0bWUnKSA7",
                 "Upgrade-Insecure-Requests": "1"}
-    a = requests.get("http://" + host_list,headers=header,timeout=5)
-    if "JE2SeJustTrustme" in a.text:
-        print(Vcolors.RED+str(host_list)+'\t存在phpstudy后门~'+Vcolors.ENDC)
-        ff = host_list + ":80:存在phpstudy后门"
-        return ff
-    else:
+    try:            
+        a = requests.get("http://" + host_list,headers=header,timeout=5)
+        if "JE2SeJustTrustme" in a.text:
+            print(Vcolors.RED+str(host_list)+'\t存在phpstudy后门~'+Vcolors.ENDC)
+            ff = host_list + ":80:存在phpstudy后门"
+            return ff
+        else:
+            pass
+    except:
         pass
+    
 
 
