@@ -27,8 +27,8 @@ def islive(ur,port):
 
 def run(url,port,index):
     if islive(url,port)!=404:
-        print(Vcolors.RED+ '\t检测JAVA deserialization漏洞(CVE-2018-2894)\n\t'+Vcolors.ENDC)
-        a = url+":"+port+":检测JAVA deserialization漏洞(CVE-2018-2894)"
+        print(Vcolors.RED+str(url) + '\t存在JAVA deserialization漏洞(CVE-2018-2894)\n\t'+Vcolors.ENDC)
+        a = url+":"+port+":存在JAVA deserialization漏洞(CVE-2018-2894)"
         return a
     else:
         pass
