@@ -37,12 +37,6 @@ def poolmana(portdic):
             p.apply_async(work,args=(rip,rport,q,))
             p.close()
             p.join()
-        elif ip[-1] =="7002":
-            rip = ip[0]
-            rport = ip[-1]
-            p.apply_async(work,args=(rip,rport,q,))
-            p.close()
-            p.join()
         else:
             pass
     return p7001dict
