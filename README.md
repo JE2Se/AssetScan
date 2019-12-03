@@ -30,8 +30,9 @@ IP端口检测支持全端口检测，Top1000检测，风险端口检测<br>
 
 ### 安装依赖
 <code>python3 -m pip install -r requirements.txt</code><br>
-
+**需要在运行系统安装masscan软件**<br>
 **需要在运行系统安装nmap软件**<br>
+
 
 ### 用法
 
