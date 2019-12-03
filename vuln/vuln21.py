@@ -31,7 +31,7 @@ def do_nmap(host_list):
     b = nm.scan(hosts=host_list, arguments='-p 21  -script ftp-vsftpd-backdoor.nse')
     try:
         a  = str(b)
-        if "VULNERABLE" and "vsftpd" in a :
+        if "VULNERABLE" and "vsftpd" and "CVE-2011-2523" in a :
             print(Vcolors.RED+str(host_list)+'\t存在vsftpd后门(CVE-2011-2523)~'+Vcolors.ENDC)
             a = host_list+":21:存在vsftpd后门(CVE-2011-2523)"
             return a
@@ -55,7 +55,7 @@ def do_nmap2(host_list):
     nm.scan(hosts=host_list, arguments='-p 21 -script ftp-proftpd-backdoor.nse')
     try:
         a = nm[host_list]["tcp"][21]["script"]['ftp-proftpd-backdoor']
-        if "ftp-proftpd-backdoor" and "VULNERABLE" and "CVE-2011-2523" in str(a):
+        if "ftp-proftpd-backdoor" and "VULNERABLE"  in str(a):
             print(Vcolors.RED+str(host_list)+'\t存在proftpd后门漏洞~'+Vcolors.ENDC)
             a = host_list+":21:存在proftpd后门漏洞"
             return a
