@@ -3,6 +3,7 @@
 ## BUG
 
 目前weblogic存在bug，正在解决中~<br>
+目前masscan存在bug，正在解决中~<br>
 
 # 简介
 
