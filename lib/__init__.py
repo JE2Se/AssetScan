@@ -15,4 +15,5 @@ from lib.iplist import IPinfo
 from lib.importfile import importfile
 from lib.alive import winping,unixping
 from lib.report import reportfile
+from lib.alive1 import arp_scan
 
