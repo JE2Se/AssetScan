@@ -16,9 +16,10 @@ import time
 #---------------------分割线--------------------------------------------------
 #线程类
 class Request(threading.Thread):
-    def __init__(self, alive_queue, *args, **kwargs):
+    def __init__(self, alive_queue, livecase, *args, **kwargs):
         super(Request, self).__init__(*args, **kwargs)
         self.alive_queue = alive_queue
+        self.livecase = livecase
 
     def run(self):
         while True:
@@ -27,23 +28,37 @@ class Request(threading.Thread):
             ip = self.alive_queue.get()
             self.alive(ip)
     def alive(self,ip):
-        try:
-            if os.name == "nt":
-                winping(ip)
-            else:
-                unixping(ip)
-        except:
-            pass
+        if self.livecase =="1":
+            try:
+                if os.name == "nt":
+                    winping(ip)
+                else:
+                    unixping(ip)
+            except:
+                pass
+        elif self.livecase =="2":
+            arp_scan(ip)
+        else:
+            print(Vcolors.OKGREEN+"程序退出~")
+            exit()
+            
 #---------------------分割线--------------------------------------------------
 #通用处理
 def father(iplist):
     print(Vcolors.OKGREEN+ "正在对目标地址进行存活检测~~"+ Vcolors.ENDC)
+    ascii_banner = pyfiglet.figlet_format("AssetScan")
+    print(Vcolors.PURPLE + ascii_banner+Vcolors.ENDC)
+    print(Vcolors.OKGREEN+"请选择存活探测的方式~")
+    print(Vcolors.OKBLUE+'''(1)Ping探测~(适用于内网内没有禁用Ping)\n(2)ARP探测~（适用于内网内禁用Pin探测)\n\n    任意键退出程序~'''+Vcolors.ENDC)
+    print("\n")
+    livecase = input(Vcolors.YELLOW+u"请选择探测存活方式->"+Vcolors.ENDC)
+    
     alive_queue = Queue(len(iplist))
     for ip in iplist:
         alive_queue.put(ip)
     thread_list = []
     for u in range(500):
-        t = Request(alive_queue)
+        t = Request(alive_queue,livecase)
         t.start()
         thread_list.append(t)
     for i in thread_list:
