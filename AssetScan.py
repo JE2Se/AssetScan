@@ -39,7 +39,6 @@ class Request(threading.Thread):
         elif self.livecase =="2":
             arp_scan(ip)
         else:
-            print(Vcolors.OKGREEN+"程序退出~")
             exit()
             
 #---------------------分割线--------------------------------------------------
