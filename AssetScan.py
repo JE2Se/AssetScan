@@ -3,7 +3,7 @@
 @File : AssetScan.py
 @Time : 2019/08/27 21:50:46
 @Author : JE2Se 
-@Version : 1.0
+@Version : 1.1
 @Contact : admin@je2se.com
 @WebSite : https://www.je2se.com
 '''
@@ -16,9 +16,10 @@ import time
 #---------------------分割线--------------------------------------------------
 #线程类
 class Request(threading.Thread):
-    def __init__(self, alive_queue, *args, **kwargs):
+    def __init__(self, alive_queue, livecase, *args, **kwargs):
         super(Request, self).__init__(*args, **kwargs)
         self.alive_queue = alive_queue
+        self.livecase = livecase
 
     def run(self):
         while True:
@@ -27,23 +28,37 @@ class Request(threading.Thread):
             ip = self.alive_queue.get()
             self.alive(ip)
     def alive(self,ip):
-        try:
-            if os.name == "nt":
-                winping(ip)
-            else:
-                unixping(ip)
-        except:
-            pass
+        if self.livecase =="1":
+            try:
+                if os.name == "nt":
+                    winping(ip)
+                else:
+                    unixping(ip)
+            except:
+                pass
+        elif self.livecase =="2":
+            arp_scan(ip)
+        else:
+            print(Vcolors.OKGREEN+"程序退出~")
+            exit()
+            
 #---------------------分割线--------------------------------------------------
 #通用处理
 def father(iplist):
     print(Vcolors.OKGREEN+ "正在对目标地址进行存活检测~~"+ Vcolors.ENDC)
+    ascii_banner = pyfiglet.figlet_format("AssetScan")
+    print(Vcolors.PURPLE + ascii_banner+Vcolors.ENDC)
+    print(Vcolors.OKGREEN+"请选择存活探测的方式~")
+    print(Vcolors.OKBLUE+'''(1)Ping探测~(适用于内网内没有禁用Ping)\n(2)ARP探测~（适用于内网内禁用Pin探测,不能跨网段)\n\n    任意键退出程序~'''+Vcolors.ENDC)
+    print("\n")
+    livecase = input(Vcolors.YELLOW+u"请选择探测存活方式->"+Vcolors.ENDC)
+    
     alive_queue = Queue(len(iplist))
     for ip in iplist:
         alive_queue.put(ip)
     thread_list = []
     for u in range(500):
-        t = Request(alive_queue)
+        t = Request(alive_queue,livecase)
         t.start()
         thread_list.append(t)
     for i in thread_list:
@@ -91,10 +106,8 @@ def father(iplist):
     print("\n")
     scancase = input(Vcolors.YELLOW+u"请选择是否进行漏洞探测->"+Vcolors.ENDC)
     if scancase == "1":
-        #vullist是存在漏洞的ip地址以及漏洞信息
-        portdic = ["46.244.19.5:7001"]
-
-        vullist = p21(portdic)+p23(portdic)+p22(portdic)+p80(portdic)+p110(portdic)+p143(portdic)+p443(portdic)+p445(portdic)+p873(portdic)+p1433(portdic)+p3306(portdic)+p6379(portdic)+p8080(portdic)+p9200(portdic)+p11211(portdic)+p27017(portdic)+poolmana(portdic)+p1521(portdic)+p2601(portdic)+vulnall(portdic)+p4848(portdic)+p2181(portdic)+p389(portdic)+p5432(portdic)+p3389(portdic)
+        #vullist是存在漏洞的ip地址以及漏洞信息 poolmana(portdic)
+        vullist = p21(portdic)+p23(portdic)+p22(portdic)+p80(portdic)+p110(portdic)+p143(portdic)+p443(portdic)+p445(portdic)+p873(portdic)+p1433(portdic)+p3306(portdic)+p6379(portdic)+p8080(portdic)+p9200(portdic)+p11211(portdic)+p27017(portdic)+p1521(portdic)+p2601(portdic)+vulnall(portdic)+p4848(portdic)+p2181(portdic)+p389(portdic)+p5432(portdic)+p3389(portdic)
         resultreport(iplist,alivelist,portdic,vullist)
     elif scancase == "2":
         resultreport(iplist,alivelist,portdic,vullist)
@@ -146,7 +159,7 @@ if __name__ == "__main__":
         #头部信息部分
         ascii_banner = pyfiglet.figlet_format("AssetScan")
         print(Vcolors.OKGREEN + ascii_banner+Vcolors.ENDC)
-        print(Vcolors.OKBLUE + "\t\t\t\tPower by JE2Se" +"   "+ Vcolors.RED + "V1.0" +"\n" +Vcolors.ENDC)
+        print(Vcolors.OKBLUE + "\t\t\t\tPower by JE2Se" +"   "+ Vcolors.RED + "V1.1" +"\n" +Vcolors.ENDC)
         parser = argparse.ArgumentParser()
         #脚本执行帮助部分
         print(Vcolors.PURPLE + "\t~请输入 -h 获取命令帮助~" + "\n" + Vcolors.ENDC + Vcolors.OKGREEN)
