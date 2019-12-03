@@ -9,3 +9,4 @@ ldap3==2.5.1
 IPy==1.00
 argparse==1.4.0
 matplotlib
+scapy
