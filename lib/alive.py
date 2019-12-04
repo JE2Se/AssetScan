@@ -17,32 +17,38 @@ import re
 from lib.color import Vcolors
 
 def unixping(ip):
-    p = subprocess.Popen(["ping -c 1 -i 0.2 -W 3 " +ip],stdin = subprocess.PIPE,stdout = subprocess.PIPE,stderr = subprocess.PIPE,shell = True)
-    out = p.stdout.read()
-    ipalive=open("./file/alive.txt",'a+')
-    if "ttl" in str(out):
-        print(Vcolors.RED + "测试范围中:\t"+ip+"\t存活~~" + Vcolors.ENDC)
-        ipalive.write(ip)
-        ipalive.write("\n")
-    else:
-        pass
-    ipalive.close()
+    try:
+        p = subprocess.Popen(["ping -c 1 -W 20 " +ip],stdin = subprocess.PIPE,stdout = subprocess.PIPE,stderr = subprocess.PIPE,shell = True)
+        out = p.stdout.read()
+        ipalive=open("./file/alive.txt",'a+')
+        if "ttl" in str(out):
+            print(Vcolors.RED + "测试范围中:\t"+ip+"\t存活~~" + Vcolors.ENDC)
+            ipalive.write(ip)
+            ipalive.write("\n")
+        else:
+            pass
+        ipalive.close()
+     except:
+        exit()
 
 def winping(ip):
-    p = subprocess.Popen(['ping','-n','1','-w','3 ',ip],
-                stdout=subprocess.PIPE,
-                stdin = subprocess.PIPE,
-                stderr = subprocess.PIPE,
-                shell = True)
-    output = p.stdout.read().decode("gbk").upper()
-    ipalive=open("./file/alive.txt",'a+')
-    if "TTL" in output:
-        print(Vcolors.RED + "测试范围中:\t"+ip+"\t存活~~" + Vcolors.ENDC)
-        ipalive.write(ip)
-        ipalive.write("\n")
-    else:
-        pass
-    ipalive.close()
+    try:
+        p = subprocess.Popen(['ping','-n','1','-w','20',ip],
+                    stdout=subprocess.PIPE,
+                    stdin = subprocess.PIPE,
+                    stderr = subprocess.PIPE,
+                    shell = True)
+        output = p.stdout.read().decode("gbk").upper()
+        ipalive=open("./file/alive.txt",'a+')
+        if "TTL" in output:
+            print(Vcolors.RED + "测试范围中:\t"+ip+"\t存活~~" + Vcolors.ENDC)
+            ipalive.write(ip)
+            ipalive.write("\n")
+        else:
+            pass
+        ipalive.close()
+    except:
+        exit()
     
     
 if __name__ == "__main__":
