@@ -35,10 +35,10 @@ def poolmana(portdic):
             rip = ip[0]
             rport = ip[-1]
             p.apply_async(work,args=(rip,rport,q,))
-            p.close()
-            p.join()
         else:
             pass
+    p.close()
+    p.join()
     return p7001dict
 
 def work(rip,rport,q):
