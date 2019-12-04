@@ -17,7 +17,7 @@ headers = {'user-agent': 'ceshi/0.0.1'}
 
 def islive(ur,port):
     url='http://' + str(ur)+':'+str(port)+'/uddiexplorer/'
-    url1='http://' + str(ur)+':'+str(port)+'/uddiexplorer/'
+    url1='https://' + str(ur)+':'+str(port)+'/uddiexplorer/'
     try:
         r = requests.get(url, headers=headers)
     except:
