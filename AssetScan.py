@@ -105,8 +105,8 @@ def father(iplist):
     print("\n")
     scancase = input(Vcolors.YELLOW+u"请选择是否进行漏洞探测->"+Vcolors.ENDC)
     if scancase == "1":
-        #vullist是存在漏洞的ip地址以及漏洞信息 poolmana(portdic)
-        vullist = p21(portdic)+p23(portdic)+p22(portdic)+p80(portdic)+p110(portdic)+p143(portdic)+p443(portdic)+p445(portdic)+p873(portdic)+p1433(portdic)+p3306(portdic)+p6379(portdic)+p8080(portdic)+p9200(portdic)+p11211(portdic)+p27017(portdic)+p1521(portdic)+p2601(portdic)+vulnall(portdic)+p4848(portdic)+p2181(portdic)+p389(portdic)+p5432(portdic)+p3389(portdic)
+        #vullist是存在漏洞的ip地址以及漏洞信息 
+        vullist = p21(portdic)+p23(portdic)+p22(portdic)+p80(portdic)+p110(portdic)+p143(portdic)+p443(portdic)+p445(portdic)+p873(portdic)+p1433(portdic)+p3306(portdic)+p6379(portdic)+p8080(portdic)+p9200(portdic)+p11211(portdic)+p27017(portdic)+p1521(portdic)+p2601(portdic)+vulnall(portdic)+p4848(portdic)+p2181(portdic)+p389(portdic)+p5432(portdic)+p3389(portdic)+poolmana(portdic)
         resultreport(iplist,alivelist,portdic,vullist)
     elif scancase == "2":
         resultreport(iplist,alivelist,portdic,vullist)
