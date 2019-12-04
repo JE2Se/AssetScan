@@ -19,9 +19,9 @@ def islive(ur,port):
     url='http://' + str(ur)+':'+str(port)+'/uddiexplorer/'
     url1='https://' + str(ur)+':'+str(port)+'/uddiexplorer/'
     try:
-        r = requests.get(url, headers=headers)
+        r = requests.get(url, headers=headers,verify=False)
     except:
-        r = requests.get(url1, headers=headers)
+        r = requests.get(url1, headers=headers,verify=False)
     return r.status_code
 
 def run(url,port):
