@@ -158,7 +158,7 @@ if __name__ == "__main__":
         #头部信息部分
         ascii_banner = pyfiglet.figlet_format("AssetScan")
         print(Vcolors.OKGREEN + ascii_banner+Vcolors.ENDC)
-        print(Vcolors.OKBLUE + "\t\t\t\tPower by JE2Se" +"   "+ Vcolors.RED + "V1.1" +"\n" +Vcolors.ENDC)
+        print(Vcolors.OKBLUE + "\t\t\t\tPower by JE2Se" +"   "+ Vcolors.RED + "V1.2" +"\n" +Vcolors.ENDC)
         parser = argparse.ArgumentParser()
         #脚本执行帮助部分
         print(Vcolors.PURPLE + "\t~请输入 -h 获取命令帮助~" + "\n" + Vcolors.ENDC + Vcolors.OKGREEN)
