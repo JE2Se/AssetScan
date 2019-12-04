@@ -17,7 +17,7 @@ def arp_scan(ip):
     ipalive=open("./file/alive.txt",'a+')
     if res:
         ip = res.psrc
-        print(Vcolors.RED + "测试范围中:\t"+ip+"\t存活~~" + Vcolors.ENDC)
+        print(Vcolors.RED + " 测试范围中:\t"+ip+"\t存活~~" + Vcolors.ENDC)
         ipalive.write(ip)
         ipalive.write("\n")
     else:
