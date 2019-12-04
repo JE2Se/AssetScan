@@ -23,7 +23,10 @@ def p1433(portdic):
     return p1433list
     
 def do_nmap(host_list):
-    nm = nmap.PortScanner()
-    nm.scan(hosts=host_list, arguments='-Pn -sC -p 1433 -max-hostgroup 3 -open -script ms-sql-brute.nse  -v')
-    for host in nm.all_hosts():
-        print(Vcolors.RED+str(host)+'\t mssql sa弱口令爆破~'+Vcolors.ENDC)
+    try:
+        nm = nmap.PortScanner()
+        nm.scan(hosts=host_list, arguments='-Pn -sC -p 1433 -max-hostgroup 3 -open -script ms-sql-brute.nse  -v')
+        for host in nm.all_hosts():
+            print(Vcolors.RED+str(host)+'\t mssql sa弱口令爆破~'+Vcolors.ENDC)
+    except:
+        pass

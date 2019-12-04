@@ -23,22 +23,30 @@ def p2601(portdic):
 
 
 def zebra(host_list):
-    url = "https://"+host_list+":2601/login"
-    a = requests.get(url,timeout=5)
-    if a.status_code == 200:
-        print(Vcolors.OKGREEN+str(host_list)+'\t识别到Zebra路由，请检测默认口令zebra:zebra~'+Vcolors.ENDC)
-        ff = host_list + ":2601:识别到Zebra路由，请检测默认口令zebra:zebra"
-        return ff
-    else:
+    try:
+        url = "https://"+host_list+":2601/login"
+        requests.packages.urllib3.disable_warnings()
+        a = requests.get(url,timeout=5,verify=False)
+        if a.status_code == 200:
+            print(Vcolors.OKGREEN+str(host_list)+'\t识别到Zebra路由，请检测默认口令zebra:zebra~'+Vcolors.ENDC)
+            ff = host_list + ":2601:识别到Zebra路由，请检测默认口令zebra:zebra"
+            return ff
+        else:
+            pass
+    except:
         pass
 
 
 def zebra1(host_list):
-    url = "https://"+host_list+":2604/login"
-    a = requests.get(url,timeout=5)
-    if a.status_code == 200:
-        print(Vcolors.OKGREEN+str(host_list)+'\t识别到Zebra路由，请检测默认口令zebra:zebra~'+Vcolors.ENDC)
-        ff = host_list + ":2604:Zebra端口开放，识别到Zebra路由，请检测默认口令zebra:zebra"
-        return ff
-    else:
+    try:
+        url = "https://"+host_list+":2604/login"
+        requests.packages.urllib3.disable_warnings()
+        a = requests.get(url,timeout=5,verify=False)
+        if a.status_code == 200:
+            print(Vcolors.OKGREEN+str(host_list)+'\t识别到Zebra路由，请检测默认口令zebra:zebra~'+Vcolors.ENDC)
+            ff = host_list + ":2604:Zebra端口开放，识别到Zebra路由，请检测默认口令zebra:zebra"
+            return ff
+        else:
+            pass
+    except:
         pass

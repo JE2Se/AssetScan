@@ -34,7 +34,7 @@ def poolmana(portdic):
         if ip[-1] == "7001":
             rip = ip[0]
             rport = ip[-1]
-            p.apply_async(work,args=(rip,rport,q,))
+            p7001dict.extend(p.apply_async(work,args=(rip,rport,q,)).get())
         else:
             pass
     p.close()
@@ -103,5 +103,5 @@ def work(rip,rport,q):
     except:
         pass
     q.put(rip)
-    p7001dict.extend(p7001list)
+    return p7001dict.extend(p7001list)
 

@@ -20,11 +20,15 @@ def p8080(portdic):
     return p8080list
 
 def iisshort(host_list):
-    host_list1 = host_list+":8080/*~1*/.aspx"
-    host_list2 = host_list+":8080/asdfasfasdf*~1*/.aspx"
-    a = requests.get("http://" + host_list1,timeout=5)
-    b = requests.get("http://" + host_list2,timeout=5)
-    if a.status_code == 404 and b.status_code != 404:
-        print(Vcolors.RED+str(host_list)+'\t存在IIS短文件名漏洞~'+Vcolors.ENDC)
-        c = host_list+":8080:存在IIS短文件名漏洞"
-        return c
+    try:
+        requests.packages.urllib3.disable_warnings()
+        host_list1 = host_list+":8080/*~1*/.aspx"
+        host_list2 = host_list+":8080/asdfasfasdf*~1*/.aspx"
+        a = requests.get("http://" + host_list1,timeout=5,verify=False)
+        b = requests.get("http://" + host_list2,timeout=5,verify=False)
+        if a.status_code == 404 and b.status_code != 404:
+            print(Vcolors.RED+str(host_list)+'\t存在IIS短文件名漏洞~'+Vcolors.ENDC)
+            c = host_list+":8080:存在IIS短文件名漏洞"
+            return c
+    except:
+        pass
