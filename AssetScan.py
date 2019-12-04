@@ -39,7 +39,7 @@ class Request(threading.Thread):
         elif self.livecase =="2":
             arp_scan(ip)
         else:
-            exit()
+            os._exit(0)
             
 #---------------------分割线--------------------------------------------------
 #通用处理
