@@ -20,9 +20,9 @@ def islive(ur,port):
     url='http://' + str(ur)+':'+str(port)+'/ws_utc/resources/setting/options/general'
     url1='https://' + str(ur)+':'+str(port)+'/ws_utc/resources/setting/options/general'
     try:
-        r = requests.get(url, headers=headers)
+        r = requests.get(url, headers=headers,verify=False)
     except:
-        r = requests.get(url1, headers=headers)
+        r = requests.get(url1, headers=headers,verify=False)
     return r.status_code
 
 def run(url,port,index):
