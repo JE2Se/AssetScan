@@ -28,7 +28,7 @@ def unixping(ip):
         else:
             pass
         ipalive.close()
-     except:
+    except:
         exit()
 
 def winping(ip):
