@@ -10,6 +10,7 @@
 from IPy import IP
 from ipaddr import IPAddress as ip_address
 from lib.color import Vcolors
+import os
 
 ipList = []
 def IPauto(ipl):
@@ -75,20 +76,25 @@ def IPal(ipl):
 
 
 def IPinfo(info):
-    if "/" in info and "-" not in info  and "," not in info:
-            IPauto(info)
-    elif "-" in info and "/" not in info and "," not in info:
-        IPduan(info)
-    elif "-" and "/" in info and "," not in info:
-        IPyu(info)
-    elif "," and "/"  and "-" in info:
-        IPal(info)
-    elif "," in info and "-" not in info and "/" not in info :
-        IPdou(info)
-    elif "," and "-" in info and "/" not in info:
-        IPge(info)
-    elif "," and "/" in info and "-" not in info:
-        IPne(info)
-    else:
-        ipList.append(info)
-    return ipList
+    try:
+        if "/" in info and "-" not in info  and "," not in info:
+                IPauto(info)
+        elif "-" in info and "/" not in info and "," not in info:
+            IPduan(info)
+        elif "-" and "/" in info and "," not in info:
+            IPyu(info)
+        elif "," and "/"  and "-" in info:
+            IPal(info)
+        elif "," in info and "-" not in info and "/" not in info :
+            IPdou(info)
+        elif "," and "-" in info and "/" not in info:
+            IPge(info)
+        elif "," and "/" in info and "-" not in info:
+            IPne(info)
+        else:
+            ipList.append(info)
+        return ipList
+    except:
+        print(Vcolors.YELLOW+'请按照IP格式进行输入:\n'+Vcolors.ENDC)
+        print(Vcolors.YELLOW+'\teg: 192.168.1.1  ,  192.168.1.1-192.168.1.100  ,   192.168.1.0/24'+Vcolors.ENDC)
+        os._exit(0)
