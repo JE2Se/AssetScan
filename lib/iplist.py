@@ -76,25 +76,50 @@ def IPal(ipl):
 
 
 def IPinfo(info):
-    try:
-        if "/" in info and "-" not in info  and "," not in info:
-                IPauto(info)
-        elif "-" in info and "/" not in info and "," not in info:
-            IPduan(info)
-        elif "-" and "/" in info and "," not in info:
-            IPyu(info)
-        elif "," and "/"  and "-" in info:
-            IPal(info)
-        elif "," in info and "-" not in info and "/" not in info :
-            IPdou(info)
-        elif "," and "-" in info and "/" not in info:
-            IPge(info)
-        elif "," and "/" in info and "-" not in info:
-            IPne(info)
-        else:
-            ipList.append(info)
-        return ipList
-    except:
-        print(Vcolors.YELLOW+'请按照IP格式进行输入:\n'+Vcolors.ENDC)
-        print(Vcolors.YELLOW+'\teg: 192.168.1.1  ,  192.168.1.1-192.168.1.100  ,   192.168.1.0/24'+Vcolors.ENDC)
-        os._exit(0)
+    if "1/24" in info:
+        info = info.replace("1/24","0/24")
+        try:
+            if "/" in info and "-" not in info  and "," not in info:
+                    IPauto(info)
+            elif "-" in info and "/" not in info and "," not in info:
+                IPduan(info)
+            elif "-" and "/" in info and "," not in info:
+                IPyu(info)
+            elif "," and "/"  and "-" in info:
+                IPal(info)
+            elif "," in info and "-" not in info and "/" not in info :
+                IPdou(info)
+            elif "," and "-" in info and "/" not in info:
+                IPge(info)
+            elif "," and "/" in info and "-" not in info:
+                IPne(info)
+            else:
+                ipList.append(info)
+            return ipList
+        except:
+            print(Vcolors.YELLOW+'请按照IP格式进行输入:\n'+Vcolors.ENDC)
+            print(Vcolors.YELLOW+'\teg: 192.168.1.1  ,  192.168.1.1-192.168.1.100  ,   192.168.1.0/24'+Vcolors.ENDC)
+            os._exit(0)
+    else:
+        try:
+            if "/" in info and "-" not in info  and "," not in info:
+                    IPauto(info)
+            elif "-" in info and "/" not in info and "," not in info:
+                IPduan(info)
+            elif "-" and "/" in info and "," not in info:
+                IPyu(info)
+            elif "," and "/"  and "-" in info:
+                IPal(info)
+            elif "," in info and "-" not in info and "/" not in info :
+                IPdou(info)
+            elif "," and "-" in info and "/" not in info:
+                IPge(info)
+            elif "," and "/" in info and "-" not in info:
+                IPne(info)
+            else:
+                ipList.append(info)
+            return ipList
+        except:
+            print(Vcolors.YELLOW+'请按照IP格式进行输入:\n'+Vcolors.ENDC)
+            print(Vcolors.YELLOW+'\teg: 192.168.1.1  ,  192.168.1.1-192.168.1.100  ,   192.168.1.0/24'+Vcolors.ENDC)
+            os._exit(0)
