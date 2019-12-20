@@ -12,15 +12,18 @@ from scapy.all import *
 from lib.color import Vcolors
 
 def arp_scan(ip):
-    arpPkt = Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=ip, hwdst="ff:ff:ff:ff:ff:ff")
-    res = srp1(arpPkt, timeout=1, verbose=0)
-    ipalive=open("./file/alive.txt",'a+')
-    if res:
-        ip = res.psrc
-        print(Vcolors.RED + " 测试范围中:\t"+ip+"\t存活~~" + Vcolors.ENDC)
-        ipalive.write(ip)
-        ipalive.write("\n")
-    else:
+    try:
+        arpPkt = Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=ip, hwdst="ff:ff:ff:ff:ff:ff")
+        res = srp1(arpPkt, timeout=1, verbose=0)
+        ipalive=open("./file/alive.txt",'a+')
+        if res:
+            ip = res.psrc
+            print(Vcolors.RED + " 测试范围中:\t"+ip+"\t存活~~" + Vcolors.ENDC)
+            ipalive.write(ip)
+            ipalive.write("\n")
+        else:
+            pass
+        ipalive.close()
+    except:
         pass
-    ipalive.close()
 
